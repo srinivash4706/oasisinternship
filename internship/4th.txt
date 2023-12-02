@@ -1,0 +1,28 @@
+import string
+import random
+
+def password_generator(length, char_set):
+    if char_set == 'lower':
+        chars = string.ascii_lowercase
+    elif char_set == 'upper':
+        chars = string.ascii_uppercase
+    elif char_set == 'letters':
+        chars = string.ascii_letters
+    elif char_set == 'numbers':
+        chars = string.digits
+    elif char_set == 'symbols':
+        chars = string.punctuation
+    else:
+        chars = string.ascii_letters + string.digits + string.punctuation
+    password = ''.join(random.choice(chars) for i in range(length))
+    return password
+
+try:
+    length = int(input("Enter password length: "))
+    char_set = input("Enter character set (lower, upper, letters, numbers, symbols): ")
+    password = password_generator(length, char_set)
+    print("Generated password: ", password)
+except ValueError:
+    print("Error: Length should be a number.")
+except Exception as e:
+    print("Error: ", str(e))

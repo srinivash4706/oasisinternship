@@ -1,0 +1,34 @@
+import requests
+import sys
+
+def get_weather(location):
+    # API endpoint
+    API_ENDPOINT = f"http://api.openweathermap.org/data/2.5/weather?q={location}&appid={API_KEY}&units=metric"
+
+    # Send a GET request to the API endpoint
+    response = requests.get(API_ENDPOINT)
+
+    # If the GET request is successful, the status code will be 200
+    if response.status_code == 200:
+        # Get the weather data from the JSON response
+        data = response.json()
+
+        # Get the temperature, humidity, and weather conditions from the data
+        temperature = data['main']['temp']
+        humidity = data['main']['humidity']
+        conditions = data['weather'][0]['description']
+
+        # Print the weather data
+        print("Temperature:", temperature, "°C")
+        print("Humidity:", humidity, "%")
+        print("Conditions:", conditions)
+    else:
+        print("Error:", response.status_code)
+
+if __name__ == "__main__":
+    # Check if the user specified a location
+    if len(sys.argv) < 2:
+        print("Error: Please specify a location.")
+    else:
+        # Get the weather data for the specified location
+        get_weather(sys.argv[1])
